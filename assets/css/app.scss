@@ -1,0 +1,55 @@
+
+table {
+    margin-top: 2rem;
+}
+
+td, th, tr, table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td, th {
+    width: 30px;
+    height: 20px;
+}
+
+button {
+    color: white;
+    padding: 2rem;
+    border: none;
+
+    transition: box-shadow .2s ease;
+
+    &:hover {
+        box-shadow: 0 0 .3rem .2rem rgba(0, 0, 0, .4);
+    }
+
+    &[data-enabled="0"] {
+        background: #777;
+    }
+}
+
+[data-status="0"] {
+    background: #eee;
+}
+
+[data-status="1"] {
+    background: black;
+}
+
+[data-status="2"] {
+    background: #ccc;
+}
+
+[data-status="3"] {
+    background: green;
+}
+
+[data-status="4"] {
+    background: red;
+}
+
+[data-status="5"] {
+    background: yellow;
+}
+

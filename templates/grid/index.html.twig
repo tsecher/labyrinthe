@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GridController!{% endblock %}
+
+{% block body %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px/1.5 sans-serif;
+		}
+
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+
+	<div class="example-wrapper">
+
+		<button data-status="3" data-enabled="0">START</button>
+		<button data-status="4" data-enabled="0">End</button>
+		<button data-status="1" data-enabled="0" data-several="1">Obstacle</button>
+
+		<input id="search" type="submit" value="OK"/>
+
+		<table>
+			<tr>
+				<th></th>
+				{% for x in 0..grid.width()-1 %}
+					<th>{{ x }}</th>
+				{% endfor %}
+			</tr>
+			{% for y in 0..grid.height()-1 %}
+				<tr>
+					<th>{{ y }}</th>
+					{% for x in 0..grid.width()-1 %}
+
+						{% set cell = grid.getCell([x, y]) %}
+						<td data-status="{{ cell.getStatus() }}" data-id="{{ cell.getId() }}">
+							{# {{  cell.getStatus() }} #}
+						</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		</table>
+
+
+		<div>
+			<input id="save" type="submit" value="SAVE"/>
+
+			<ul id="grids">
+
+			</ul>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+
