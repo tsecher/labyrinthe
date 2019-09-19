@@ -1,72 +1,74 @@
 <?php
 
-namespace App\Object;
-
-/**
- * Cellule d'une grille.
- *
- * Comprends un status d'observabilité.
- */
-class Cell
-{
-    /**
-     * Liste des status disponibles.
-     */
-    const STATUS_FREE = 0;
-    const STATUS_OBSTACLE = 1;
-    const STATUS_OBSERVED = 2;
-    const STATUS_START = 3;
-    const STATUS_END = 4;
-    const STATUS_OK = 5;
+    namespace App\Object;
 
     /**
-     * Statu courant.
+     * Cellule d'une grille.
      *
-     * @var int
+     * Comprends un status d'observabilité.
      */
-    protected $status = 0;
+    class Cell {
+        /**
+         * Liste des status disponibles.
+         */
+        const STATUS_FREE = 0;
+        const STATUS_OBSTACLE = 1;
+        const STATUS_OBSERVED = 2;
+        const STATUS_START = 3;
+        const STATUS_END = 4;
+        const STATUS_OK = 5;
 
-    protected $coordinates = [];
+        /**
+         * Statu courant.
+         *
+         * @var int
+         */
+        protected $status = 0;
 
-    /**
-     * Constructeur.
-     *
-     * @param int[] $coordinates
-     * @param int $status
-     */
-    public function __construct(array $coordinates, $status = self::STATUS_FREE)
-    {
-        $this->coordinates = $coordinates;
-        $this->status = $status;
+        protected $coordinates = [];
+
+        /**
+         * Constructeur.
+         *
+         * @param int[] $coordinates
+         * @param int $status
+         */
+        public function __construct(array $coordinates, $status = self::STATUS_FREE) {
+            $this->coordinates = $coordinates;
+            $this->status = $status;
+        }
+
+        public function getStatus() {
+            return $this->status;
+        }
+
+        public function setStatus($status) {
+            $this->status = $status;
+            return $this;
+        }
+
+        public function getId() {
+            return implode($this->coordinates, '_');
+        }
+
+        public function getCoordinates() {
+            return $this->coordinates;
+        }
+
+        public function isIn(array $cells) {
+            $data = array_map(function (Cell $cell) {
+                return $cell->getId();
+            }, $cells);
+            return in_array($this->getId(), $data);
+        }
+
+        public function sameLine(Cell $cell) {
+            foreach ($cell->getCoordinates() as $key => $value){
+                if($this->coordinates[$key]==$value){
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-        return $this;
-    }
-
-    public function getId()
-    {
-        return implode($this->coordinates, '_');
-    }
-
-    public function getCoordinates()
-    {
-        return $this->coordinates;
-    }
-
-    public function isIn(array $cells){
-      $data = array_map(function(Cell $cell){
-        return $cell->getId();
-      }, $cells);
-        return in_array($this->getId(), $data );
-
-    }
-
-}

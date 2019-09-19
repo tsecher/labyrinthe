@@ -12,6 +12,10 @@ class GridStorage {
 		for (let i in this._getStorageData()) {
 			const item = document.createElement("li");
 			item.innerHTML = i
+			const _close =document.createElement('div');
+			_close.innerHTML = "supprimer"
+			_close.addEventListener('click', (evt)=> this.deleteGrid(i, evt));
+			item.appendChild(_close)
 			item.setAttribute('data-id', i);
 			item.addEventListener('click', (evt) => this.onItemClick(evt.currentTarget));
 			list.appendChild(item);
@@ -57,16 +61,25 @@ class GridStorage {
 			item.setAttribute('data-status', 0);
 		})
 
-		this.enable(data.data.start, 3);
-		this.enable(data.data.end, 4);
-		this.enable(data.data.obstacles, 1);
+		if( data ){
+			this.enable(data.data.start, 3);
+			this.enable(data.data.end, 4);
+			this.enable(data.data.obstacles, 1);
+		}
 	}
 
 	enable(ids, status) {
 		ids.map(id=> {
 			document.querySelector('[data-id="' + id + '"]').setAttribute('data-status', status);
 		})
+	}
 
+	deleteGrid(i, evt){
+		const storage = this._getStorageData();
+		delete storage[i];
+		this._setStorageData(storage);
+		evt.preventDefault();
+		return false;
 	}
 }
 
